@@ -29,7 +29,7 @@ export function Pagination({
   const endItem = Math.min((currentPage + 1) * ITEMS_PER_PAGE, totalHits)
 
   const getVisiblePages = () => {
-    const delta = window.innerWidth < 640 ? 1 : 2
+    const delta = 1
     const start = Math.max(0, currentPage - delta)
     const end = Math.min(totalPages - 1, currentPage + delta)
 

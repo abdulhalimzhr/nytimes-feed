@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import Home from '../src/app/page'
+import ClientHome from '../src/app/client-home'
 import { fetchArticles } from '../src/lib/api'
 
 jest.mock('../src/lib/api')
@@ -86,7 +86,12 @@ function renderApp() {
   const queryClient = createTestQueryClient()
   return render(
     <QueryClientProvider client={queryClient}>
-      <Home />
+      <ClientHome
+        initialQuery=""
+        initialPage={0}
+        initialData={null}
+        initialError={null}
+      />
     </QueryClientProvider>
   )
 }

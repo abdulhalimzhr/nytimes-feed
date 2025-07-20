@@ -1,19 +1,31 @@
 import { useQuery } from '@tanstack/react-query'
-import { fetchArticles } from '../lib/api'
+import { fetchArticles, ArticleSearchResult } from '../lib/api'
 
-export function useArticles(query: string, page = 0) {
+interface UseArticlesOptions {
+  initialData?: ArticleSearchResult | null
+  initialError?: Error | null
+}
+
+export function useArticles(
+  searchQuery: string,
+  pageNumber = 0,
+  options?: UseArticlesOptions
+) {
   return useQuery({
-    queryKey: ['articles', query, page],
-    queryFn: () => fetchArticles(query, page),
-    enabled: true, // Always enabled so empty queries work too
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    retry: (failureCount, error) => {
+    queryKey: ['articles', searchQuery, pageNumber],
+    queryFn: () => fetchArticles(searchQuery, pageNumber),
+    enabled: true,
+    staleTime: 5 * 60 * 1000,
+    initialData: options?.initialData || undefined,
+    retry: (attemptCount, error) => {
       if (error instanceof Error) {
-        if (error.message.includes('401') || error.message.includes('403')) {
+        const errorMsg = error.message.toLowerCase()
+        if (errorMsg.includes('401') || errorMsg.includes('403')) {
           return false
         }
       }
-      return failureCount < 2
+
+      return attemptCount < 2
     },
   })
 }

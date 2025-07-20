@@ -3,7 +3,6 @@ import '@testing-library/jest-dom'
 import SearchBar from '../components/search-bar'
 import ArticleCard from '../components/article-card'
 
-// Mock article data
 const mockArticle = {
   _id: '12345',
   web_url: 'https://www.nytimes.com/test-article',
@@ -51,7 +50,9 @@ describe('NYT Article Search App', () => {
       const mockOnSearch = jest.fn()
       render(<SearchBar onSearch={mockOnSearch} />)
 
-      const input = screen.getByPlaceholderText(/search articles or leave empty/i)
+      const input = screen.getByPlaceholderText(
+        /search articles or leave empty/i
+      )
       const button = screen.getByRole('button', { name: /search/i })
 
       fireEvent.change(input, { target: { value: '' } })

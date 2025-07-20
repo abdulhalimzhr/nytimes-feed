@@ -5,10 +5,11 @@ import { Button } from './ui/button'
 
 interface SearchBarProps {
   onSearch: (query: string) => void
+  initialValue?: string
 }
 
-export default function SearchBar({ onSearch }: SearchBarProps) {
-  const [query, setQuery] = useState('')
+export default function SearchBar({ onSearch, initialValue = '' }: SearchBarProps) {
+  const [query, setQuery] = useState(initialValue)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
